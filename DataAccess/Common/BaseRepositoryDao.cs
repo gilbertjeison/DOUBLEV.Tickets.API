@@ -8,6 +8,11 @@ namespace DataAccess.Common
     {
         protected BaseRepositoryDao() { }
 
+        public void SetAutoSave(bool value)
+        {
+            this.autoSave = value;
+        }
+
         protected void EntityStateDetached(T obj)
         {
             if (obj.IsNotNull() && RepositoryContext.Entry(obj).IsNotNull())

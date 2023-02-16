@@ -11,6 +11,5 @@ namespace DataAccess.Common.Interfaces
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
         int SaveChanges();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-        Task<int> ExecuteQueryAsync(string sQuery);
     }
 }

@@ -28,9 +28,10 @@ namespace Utilities.Enumerations
             ErrMaxLength = 104,
             ErrMaxValue = 105,
             ExistField = 106,
+            ObjectEmpty = 107,
 
             //Validaciones Negocio 100X - 10000X
-            
+
             //Error de Negocio 10000X:
         }
     }

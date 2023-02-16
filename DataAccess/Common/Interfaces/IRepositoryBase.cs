@@ -8,6 +8,14 @@ namespace DataAccess.Common.Interfaces
     {
         IMainContext RepositoryContext { get; }
 
+        void SetAutoSave(bool value);
+
+        T Search(Expression<Func<T, bool>> expression);
+
+        long Count(Expression<Func<T, bool>> expression);
+
+        void SetParameterBusinessRules(ParameterBusinessRules parameterBusinessRules);
+
         Task<List<T>> ToListAsync();
 
         Task<List<T>> ToListAsync(ParameterOfList<T> parameterOfList);

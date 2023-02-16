@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DataAccess.Common.Interfaces;
+using Entities.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
-namespace Entities.Entities;
+namespace DataAccess.Common;
 
-public partial class TicketsContext : DbContext
+public partial class TicketsContext : DbContext, IMainContext
 {
     public TicketsContext()
     {
@@ -15,11 +16,18 @@ public partial class TicketsContext : DbContext
     {
     }
 
+    public TicketsContext(string connectionString) : base(GetOptions(connectionString, null)) { }
+
+    public TicketsContext(string connectionString, Action<SqlServerDbContextOptionsBuilder> sqlServerOptionsAction) 
+        : base(GetOptions(connectionString, sqlServerOptionsAction)) { }
+
+
     public virtual DbSet<Ticket> Tickets { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=tickets;Trusted_Connection=True;Encrypt=False;");
+    private static DbContextOptions GetOptions(string connectionString, Action<SqlServerDbContextOptionsBuilder> sqlServerOptionsAction)
+    {
+        return SqlServerDbContextOptionsExtensions.UseSqlServer(new DbContextOptionsBuilder(), connectionString, sqlServerOptionsAction).Options;
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

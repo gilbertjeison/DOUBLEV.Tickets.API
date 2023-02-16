@@ -25,5 +25,13 @@
             Contains,
             Any
         }
+
+        public enum CategoryMessage { Success = 200, Error = 500, Warning = 400, Alert = 100 }
+
+        public enum Validations
+        {
+            Entity = 1,
+            Button = 2
+        }
     }
 }
